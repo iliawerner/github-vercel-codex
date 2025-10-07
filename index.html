@@ -9,20 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep: #02010f;
-      --bg-hero: #05031a;
-      --bg-alt: #07061b;
-      --surface: rgba(16, 18, 44, 0.72);
-      --surface-strong: rgba(20, 23, 56, 0.9);
-      --surface-soft: rgba(12, 14, 36, 0.55);
-      --text-primary: #f3f6ff;
-      --text-secondary: rgba(227, 230, 255, 0.72);
-      --accent: #6f7dff;
-      --accent-soft: rgba(111, 125, 255, 0.2);
-      --accent-strong: rgba(111, 125, 255, 0.75);
-      --code-bg: rgba(111, 125, 255, 0.16);
-      --code-text: #eef0ff;
-      --border: rgba(122, 136, 255, 0.28);
+      --bg-dark: #050314;
+      --bg-light: #f5f7ff;
+      --text-primary: #121122;
+      --text-secondary: rgba(18, 17, 34, 0.7);
+      --accent: #5e4ff7;
+      --accent-soft: rgba(94, 79, 247, 0.18);
+      --accent-strong: rgba(94, 79, 247, 0.8);
+      --code-bg: rgba(18, 17, 34, 0.08);
+      --code-text: #2a2473;
+      --border: rgba(18, 17, 34, 0.08);
       --max-width: 1100px;
     }
 
@@ -34,11 +30,9 @@
       margin: 0;
       font-family: 'Inter', sans-serif;
       color: var(--text-primary);
-      background: radial-gradient(circle at 10% -20%, rgba(90, 94, 255, 0.18), transparent 45%),
-        radial-gradient(circle at 90% 0%, rgba(86, 241, 255, 0.12), transparent 40%), var(--bg-deep);
+      background: var(--bg-light);
       line-height: 1.6;
       overflow-x: hidden;
-      color-scheme: dark;
     }
 
     h1, h2, h3 {
@@ -49,7 +43,6 @@
     p {
       margin: 0 0 1.25rem;
       font-size: 1.05rem;
-      color: var(--text-secondary);
     }
 
     section {
@@ -66,28 +59,19 @@
       color: #fff;
       position: relative;
       overflow: hidden;
-      background: var(--bg-hero);
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.06), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08), transparent 65%),
+        var(--bg-dark);
     }
 
     .hero::before {
       content: '';
       position: absolute;
       inset: -150px;
-      background: linear-gradient(120deg, rgba(94, 79, 247, 0.35), rgba(44, 180, 255, 0.25), rgba(255, 119, 221, 0.2));
-      filter: blur(140px);
+      background: linear-gradient(120deg, rgba(94, 79, 247, 0.45), rgba(44, 180, 255, 0.35), rgba(255, 119, 221, 0.25));
+      filter: blur(120px);
       animation: drift 14s ease-in-out infinite alternate;
-      opacity: 0.7;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 140px 140px;
-      opacity: 0.25;
-      pointer-events: none;
+      opacity: 0.8;
     }
 
     @keyframes drift {
@@ -106,20 +90,19 @@
       position: relative;
       max-width: 780px;
       z-index: 1;
-      padding: clamp(160px, 18vh, 220px) 24px 0;
+      padding: 0 24px;
     }
 
     .hero h1 {
       font-size: clamp(2.5rem, 6vw, 4.25rem);
       letter-spacing: -0.02em;
-      margin-bottom: 1.4rem;
-      line-height: 1.05;
+      margin-bottom: 1.5rem;
     }
 
     .hero p {
       font-size: clamp(1.3rem, 2.6vw, 1.75rem);
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.78);
+      color: rgba(255, 255, 255, 0.8);
       margin-bottom: 2.5rem;
     }
 
@@ -127,14 +110,11 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.75rem 1.7rem;
-      background: rgba(255, 255, 255, 0.08);
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 999px;
       font-weight: 500;
       font-size: 1rem;
-      letter-spacing: 0.04em;
-      margin-bottom: clamp(28px, 4vh, 48px);
-      color: rgba(255, 255, 255, 0.92);
     }
 
     .hero .scroll-hint {
@@ -182,7 +162,7 @@
     }
 
     .intro {
-      background: linear-gradient(180deg, rgba(8, 10, 30, 0.9) 0%, rgba(5, 6, 24, 0.95) 100%);
+      background: #fff;
     }
 
     .intro-content {
@@ -209,12 +189,12 @@
       position: relative;
       padding: 24px;
       border-radius: 20px;
-      background: rgba(28, 32, 72, 0.55);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(111, 125, 255, 0.28);
+      background: rgba(94, 79, 247, 0.08);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(94, 79, 247, 0.15);
       color: var(--text-primary);
       font-weight: 500;
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .intro .highlight-card::before {
@@ -225,8 +205,8 @@
       width: 42px;
       height: 42px;
       border-radius: 12px;
-      background: linear-gradient(135deg, rgba(111, 125, 255, 0.35), rgba(86, 241, 255, 0.25));
-      opacity: 0.55;
+      background: linear-gradient(135deg, rgba(94, 79, 247, 0.4), rgba(44, 180, 255, 0.4));
+      opacity: 0.5;
       animation: shimmer 8s ease-in-out infinite;
     }
 
@@ -240,7 +220,7 @@
     }
 
     .guide {
-      background: linear-gradient(180deg, rgba(5, 7, 28, 0.96) 0%, rgba(2, 3, 16, 0.96) 100%);
+      background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 60%, #f7f9ff 100%);
     }
 
     .guide-wrapper {
@@ -259,11 +239,11 @@
     }
 
     .visual-card {
-      background: rgba(18, 21, 52, 0.82);
+      background: #fff;
       border-radius: 28px;
       padding: 48px 40px;
-      box-shadow: 0 30px 70px rgba(5, 9, 40, 0.55);
-      border: 1px solid rgba(111, 125, 255, 0.22);
+      box-shadow: 0 30px 70px rgba(20, 25, 80, 0.12);
+      border: 1px solid rgba(94, 79, 247, 0.15);
       min-height: 380px;
       display: flex;
       flex-direction: column;
@@ -273,14 +253,14 @@
 
     .visual-card.active {
       transform: translateY(-6px);
-      box-shadow: 0 40px 90px rgba(12, 16, 60, 0.6);
+      box-shadow: 0 40px 90px rgba(20, 25, 80, 0.16);
     }
 
     .visual-icon {
       width: 78px;
       height: 78px;
       border-radius: 24px;
-      background: linear-gradient(135deg, rgba(111, 125, 255, 0.25), rgba(86, 241, 255, 0.2));
+      background: linear-gradient(135deg, rgba(94, 79, 247, 0.18), rgba(44, 180, 255, 0.18));
       display: grid;
       place-items: center;
       font-size: 34px;
@@ -302,12 +282,8 @@
       gap: 36px;
     }
 
-    .steps p {
-      color: var(--text-primary);
-    }
-
     .step {
-      background: rgba(15, 18, 44, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 28px;
@@ -317,7 +293,7 @@
 
     .step.active {
       border-color: var(--accent-strong);
-      box-shadow: 0 20px 45px rgba(16, 20, 60, 0.6);
+      box-shadow: 0 20px 40px rgba(94, 79, 247, 0.12);
     }
 
     .step-number {
@@ -327,7 +303,7 @@
       width: 42px;
       height: 42px;
       border-radius: 14px;
-      background: rgba(111, 125, 255, 0.18);
+      background: rgba(94, 79, 247, 0.15);
       color: var(--accent);
       font-weight: 600;
       margin-bottom: 16px;
@@ -346,13 +322,13 @@
     .copy-box {
       position: relative;
       padding: 18px 24px;
-      background: rgba(22, 25, 60, 0.6);
+      background: rgba(18, 17, 34, 0.04);
       border-radius: 16px;
-      border: 1px solid rgba(111, 125, 255, 0.25);
+      border: 1px solid rgba(18, 17, 34, 0.1);
       margin-top: 16px;
       font-family: 'Fira Code', monospace;
       font-size: 0.95rem;
-      color: var(--code-text);
+      color: var(--text-primary);
     }
 
     .copy-button {
@@ -360,9 +336,9 @@
       top: 12px;
       right: 12px;
       border: none;
-      background: rgba(111, 125, 255, 0.18);
-      color: var(--text-primary);
-      padding: 6px 14px;
+      background: rgba(94, 79, 247, 0.12);
+      color: var(--accent);
+      padding: 6px 12px;
       border-radius: 999px;
       font-family: 'Inter', sans-serif;
       font-size: 0.85rem;
@@ -371,7 +347,7 @@
     }
 
     .copy-button:hover {
-      background: rgba(111, 125, 255, 0.28);
+      background: rgba(94, 79, 247, 0.2);
     }
 
     .copy-button.copied {
@@ -380,7 +356,7 @@
     }
 
     .payoff {
-      background: linear-gradient(180deg, rgba(6, 7, 28, 0.96) 0%, rgba(2, 3, 15, 0.95) 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
     }
 
     .payoff .content {
@@ -392,16 +368,12 @@
       align-items: center;
     }
 
-    .payoff p {
-      color: var(--text-primary);
-    }
-
     .automation-visual {
-      background: rgba(18, 21, 52, 0.82);
+      background: #fff;
       border-radius: 24px;
       padding: 32px;
-      box-shadow: 0 30px 80px rgba(5, 10, 45, 0.55);
-      border: 1px solid rgba(111, 125, 255, 0.24);
+      box-shadow: 0 30px 80px rgba(94, 79, 247, 0.15);
+      border: 1px solid rgba(94, 79, 247, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -422,8 +394,8 @@
       position: relative;
       padding: 10px 18px;
       border-radius: 14px;
-      background: rgba(111, 125, 255, 0.18);
-      border: 1px solid rgba(111, 125, 255, 0.32);
+      background: rgba(94, 79, 247, 0.1);
+      border: 1px solid rgba(94, 79, 247, 0.25);
     }
 
     .automation-flow span::after {
@@ -433,9 +405,9 @@
       top: 50%;
       width: 36px;
       height: 2px;
-      background: linear-gradient(90deg, rgba(111, 125, 255, 0.15), rgba(111, 125, 255, 0.6));
+      background: rgba(94, 79, 247, 0.5);
       transform: translateY(-50%);
-      animation: pulse-line 2.6s ease-in-out infinite;
+      animation: pulse-line 2.2s ease-in-out infinite;
     }
 
     .automation-flow span:last-child::after {
@@ -455,43 +427,33 @@
     }
 
     .cta {
-      background: linear-gradient(180deg, rgba(5, 6, 22, 0.96) 0%, rgba(3, 3, 14, 0.96) 100%);
+      background: var(--bg-dark);
       color: #fff;
       text-align: center;
       padding: 140px 24px 160px;
     }
 
-    .cta-shell {
-      max-width: 720px;
-      margin: 0 auto;
-      background: rgba(26, 30, 72, 0.7);
-      border-radius: 24px;
-      border: 1px solid rgba(111, 125, 255, 0.32);
-      padding: 48px 36px;
-      box-shadow: 0 45px 120px rgba(6, 10, 44, 0.65);
-      backdrop-filter: blur(16px);
-    }
-
     .cta h2 {
       font-size: clamp(2rem, 5vw, 3.2rem);
-      margin-bottom: 0;
-      line-height: 1.1;
+      margin-bottom: 32px;
     }
 
-    .fade-section {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.9s ease, transform 0.9s ease;
+    .cta button {
+      background: linear-gradient(135deg, rgba(94, 79, 247, 1), rgba(44, 180, 255, 1));
+      border: none;
+      border-radius: 999px;
+      padding: 18px 48px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 24px 50px rgba(94, 79, 247, 0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .fade-ready .fade-section {
-      opacity: 0;
-      transform: translateY(28px);
-    }
-
-    .fade-ready .fade-section.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .cta button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 32px 60px rgba(94, 79, 247, 0.45);
     }
 
     @media (max-width: 1024px) {
@@ -527,14 +489,6 @@
         padding: 0 20px;
       }
 
-      .hero-content {
-        padding: 120px 12px 0;
-      }
-
-      .hero .logos {
-        margin-bottom: 32px;
-      }
-
       .hero .scroll-hint {
         margin-top: 48px;
       }
@@ -563,7 +517,7 @@
     </div>
   </header>
 
-  <section class="intro fade-section">
+  <section class="intro">
     <div class="intro-content">
       <div>
         <p>The magic combination is ChatGPT Codex + GitHub + Vercel.</p>
@@ -578,7 +532,7 @@
     </div>
   </section>
 
-  <section class="guide fade-section">
+  <section class="guide">
     <div class="guide-wrapper">
       <div class="sticky-visual">
         <div class="visual-card" id="visualCard">
@@ -637,7 +591,7 @@
     </div>
   </section>
 
-  <section class="payoff fade-section">
+  <section class="payoff">
     <div class="content">
       <div>
         <p>From this moment on, everything you create with ChatGPT Codex will be sent to GitHub with a single click. Even before you merge a Pull Request, Vercel will automatically build a preview on a separate subdomain. This allows you to check that everything works correctly before you finalize the changes by merging.</p>
@@ -653,7 +607,7 @@
     </div>
   </section>
 
-  <section class="intro fade-section">
+  <section class="intro">
     <div class="intro-content">
       <div>
         <p>My recommendation is to try this process just once, today. If you're like me and often feel a resistance to new things, going through a pre-written guide with a small task can really help break down that barrier.</p>
@@ -662,33 +616,12 @@
     </div>
   </section>
 
-  <section class="cta fade-section">
-    <div class="cta-shell">
-      <h2>My recommendation is to try this process just once, today.</h2>
-    </div>
+  <section class="cta">
+    <h2>My recommendation is to try this process just once, today.</h2>
+    <button type="button" aria-label="Give it a try today">Give it a try today</button>
   </section>
 
   <script>
-    document.body.classList.add('fade-ready');
-
-    const revealSections = document.querySelectorAll('.fade-section');
-    const revealObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '0px 0px -10% 0px'
-      }
-    );
-
-    revealSections.forEach(section => revealObserver.observe(section));
-
     const visuals = [
       {
         icon: '🆕',
@@ -769,6 +702,7 @@
     steps.forEach(step => observer.observe(step));
 
     const copyButton = document.getElementById('copyButton');
+    const copyBox = document.getElementById('copyBox');
 
     copyButton.addEventListener('click', async () => {
       const text = "Create a 'work in progress' page with the text * * * in the style of * * *.";
