@@ -1,1 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Simple Workflow for Building AI-Powered Websites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #050314;
+      --bg-light: #f5f7ff;
+      --text-primary: #121122;
+      --text-secondary: rgba(18, 17, 34, 0.7);
+      --accent: #5e4ff7;
+      --accent-soft: rgba(94, 79, 247, 0.18);
+      --accent-strong: rgba(94, 79, 247, 0.8);
+      --code-bg: rgba(18, 17, 34, 0.08);
+      --code-text: #2a2473;
+      --border: rgba(18, 17, 34, 0.08);
+      --max-width: 1100px;
+    }
 
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    section {
+      padding: 120px 24px;
+      position: relative;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.06), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08), transparent 65%),
+        var(--bg-dark);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -150px;
+      background: linear-gradient(120deg, rgba(94, 79, 247, 0.45), rgba(44, 180, 255, 0.35), rgba(255, 119, 221, 0.25));
+      filter: blur(120px);
+      animation: drift 14s ease-in-out infinite alternate;
+      opacity: 0.8;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translate3d(-5%, -5%, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(4%, 6%, 0) scale(1.05);
+      }
+      100% {
+        transform: translate3d(-3%, 8%, 0) scale(1.02);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 780px;
+      z-index: 1;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.25rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero .logos {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    .hero .scroll-hint {
+      margin-top: 80px;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero .scroll-hint .arrow {
+      width: 18px;
+      height: 36px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .hero .scroll-hint .arrow::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      width: 4px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      transform: translateX(-50%);
+      animation: arrow-drop 1.8s ease-in-out infinite;
+    }
+
+    @keyframes arrow-drop {
+      0%, 100% {
+        transform: translate(-50%, 0);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translate(-50%, 14px);
+        opacity: 1;
+      }
+    }
+
+    .intro {
+      background: #fff;
+    }
+
+    .intro-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 64px;
+      align-items: start;
+    }
+
+    .intro p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    .intro .highlighted {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .intro .highlight-card {
+      position: relative;
+      padding: 24px;
+      border-radius: 20px;
+      background: rgba(94, 79, 247, 0.08);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(94, 79, 247, 0.15);
+      color: var(--text-primary);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .intro .highlight-card::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(94, 79, 247, 0.4), rgba(44, 180, 255, 0.4));
+      opacity: 0.5;
+      animation: shimmer 8s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% {
+        transform: translate3d(0, 0, 0);
+      }
+      50% {
+        transform: translate3d(6px, -6px, 0);
+      }
+    }
+
+    .guide {
+      background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 60%, #f7f9ff 100%);
+    }
+
+    .guide-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 56px;
+      align-items: start;
+    }
+
+    .sticky-visual {
+      position: sticky;
+      top: 120px;
+      align-self: start;
+    }
+
+    .visual-card {
+      background: #fff;
+      border-radius: 28px;
+      padding: 48px 40px;
+      box-shadow: 0 30px 70px rgba(20, 25, 80, 0.12);
+      border: 1px solid rgba(94, 79, 247, 0.15);
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+    }
+
+    .visual-card.active {
+      transform: translateY(-6px);
+      box-shadow: 0 40px 90px rgba(20, 25, 80, 0.16);
+    }
+
+    .visual-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(94, 79, 247, 0.18), rgba(44, 180, 255, 0.18));
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      color: var(--accent);
+    }
+
+    .visual-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .visual-description {
+      color: var(--text-secondary);
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .step.active {
+      border-color: var(--accent-strong);
+      box-shadow: 0 20px 40px rgba(94, 79, 247, 0.12);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(94, 79, 247, 0.15);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .code-accent {
+      font-family: 'Fira Code', monospace;
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .copy-box {
+      position: relative;
+      padding: 18px 24px;
+      background: rgba(18, 17, 34, 0.04);
+      border-radius: 16px;
+      border: 1px solid rgba(18, 17, 34, 0.1);
+      margin-top: 16px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border: none;
+      background: rgba(94, 79, 247, 0.12);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .copy-button:hover {
+      background: rgba(94, 79, 247, 0.2);
+    }
+
+    .copy-button.copied {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .payoff {
+      background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
+    }
+
+    .payoff .content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 48px;
+      align-items: center;
+    }
+
+    .automation-visual {
+      background: #fff;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 30px 80px rgba(94, 79, 247, 0.15);
+      border: 1px solid rgba(94, 79, 247, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .automation-flow {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-weight: 500;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .automation-flow span {
+      position: relative;
+      padding: 10px 18px;
+      border-radius: 14px;
+      background: rgba(94, 79, 247, 0.1);
+      border: 1px solid rgba(94, 79, 247, 0.25);
+    }
+
+    .automation-flow span::after {
+      content: '';
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      width: 36px;
+      height: 2px;
+      background: rgba(94, 79, 247, 0.5);
+      transform: translateY(-50%);
+      animation: pulse-line 2.2s ease-in-out infinite;
+    }
+
+    .automation-flow span:last-child::after {
+      display: none;
+    }
+
+    @keyframes pulse-line {
+      0% {
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.2;
+      }
+    }
+
+    .cta {
+      background: var(--bg-dark);
+      color: #fff;
+      text-align: center;
+      padding: 140px 24px 160px;
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      margin-bottom: 32px;
+    }
+
+    .cta button {
+      background: linear-gradient(135deg, rgba(94, 79, 247, 1), rgba(44, 180, 255, 1));
+      border: none;
+      border-radius: 999px;
+      padding: 18px 48px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 24px 50px rgba(94, 79, 247, 0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cta button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 32px 60px rgba(94, 79, 247, 0.45);
+    }
+
+    @media (max-width: 1024px) {
+      .intro-content,
+      .guide-wrapper,
+      .payoff .content {
+        grid-template-columns: 1fr;
+      }
+
+      .sticky-visual {
+        position: static;
+      }
+
+      .visual-card {
+        min-height: auto;
+      }
+
+      .automation-flow {
+        flex-direction: column;
+      }
+
+      .automation-flow span::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      section {
+        padding: 80px 20px;
+      }
+
+      .hero {
+        padding: 0 20px;
+      }
+
+      .hero .scroll-hint {
+        margin-top: 48px;
+      }
+
+      .intro .highlight-card::before {
+        width: 32px;
+        height: 32px;
+      }
+
+      .step {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <div class="logos">ChatGPT + GitHub + Vercel</div>
+      <h1>A Simple Workflow for Building AI-Powered Websites</h1>
+      <p>A simple tool for creating and publishing high-quality, AI-generated websites already exists. It's hiding in plain sight, but there's a bit of a learning curve. I urge you to overcome it and give this method a try at least once.</p>
+      <div class="scroll-hint">
+        <span>Scroll to begin</span>
+        <div class="arrow"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="intro-content">
+      <div>
+        <p>The magic combination is ChatGPT Codex + GitHub + Vercel.</p>
+        <p>It might sound like something for techies, but it's actually a functional AI design system with a manageable barrier to entry. I'm confident you can grasp the necessary tricks in a single evening of playing around with the interfaces.</p>
+        <p>So, what's the benefit? This setup gives you the power to build and update websites with AI. Unlike tools like Claude Code or Gemini CLI, ChatGPT Codex doesn't require you to mess with a command line; it’s all done through a simple web interface. You can create a new repository and give it the project brief for your site, and it genuinely does all the work.</p>
+        <p>Granted, it almost never gets it perfect on the first try. In total, a single-page website, complete with cool Spline animations and full optimization, takes about 7-8 hours of work—roughly the same as with no-code tools.</p>
+      </div>
+      <div class="highlighted">
+        <div class="highlight-card">The difference is that you have far more possibilities here. You can easily write a custom calculator, create custom animation scripts, or integrate an AI function via an API. And it's all done within the same workflow where you do everything else.</div>
+        <div class="highlight-card">Secondly, it's significantly cheaper. The free tiers for GitHub and Vercel are more than enough for most design tasks. This means the only paid component in this entire process is your ChatGPT subscription.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="guide-wrapper">
+      <div class="sticky-visual">
+        <div class="visual-card" id="visualCard">
+          <div class="visual-icon" id="visualIcon">💡</div>
+          <div class="visual-title" id="visualTitle">A More Down-to-Earth Guide</div>
+          <div class="visual-description" id="visualDescription">Follow along as each step highlights what you'll see in GitHub, ChatGPT Codex, and Vercel.</div>
+        </div>
+      </div>
+      <div>
+        <p>A More Down-to-Earth Guide to GitHub + Vercel + ChatGPT Codex</p>
+        <p>Let's break it down step-by-step:</p>
+        <div class="steps">
+          <article class="step" data-visual="0">
+            <div class="step-number">1</div>
+            <p>Create a GitHub account. Inside, create a new project (repository).</p>
+          </article>
+          <article class="step" data-visual="1">
+            <div class="step-number">2</div>
+            <p>Create a Vercel account. Use the convenient "Sign in with GitHub" option to link the accounts right away.</p>
+          </article>
+          <article class="step" data-visual="2">
+            <div class="step-number">3</div>
+            <p>Go to ChatGPT Codex in the left-hand menu of the ChatGPT web version. Go into the settings and connect your GitHub account. You might need to click a few approval prompts to allow the AI to connect to your projects—just follow the on-screen instructions. (My memory here is a bit fuzzy because I just did what it told me to do without digging into the why).</p>
+          </article>
+          <article class="step" data-visual="3">
+            <div class="step-number">4</div>
+            <p>Give ChatGPT a task. You can start with something minimal, like:</p>
+            <div class="copy-box" id="copyBox">
+              <button class="copy-button" id="copyButton" aria-label="Copy prompt">Copy</button>
+              "Create a 'work in progress' page with the text * * * in the style of * * *."
+            </div>
+            <p>This is just to ensure your GitHub project isn't empty.</p>
+          </article>
+          <article class="step" data-visual="4">
+            <div class="step-number">5</div>
+            <p>When ChatGPT is finished, click <span class="code-accent">'Create PR'</span> in the top left corner. PR stands for Pull Request, which is a request to change the main branch of your project. For simple landing pages, you don't need to understand branching systems; just know that to apply the changes, you need to click the <span class="code-accent">'View PR'</span> button after it finishes sending.</p>
+          </article>
+          <article class="step" data-visual="5">
+            <div class="step-number">6</div>
+            <p>This will take you to the Pull Request page on GitHub. If everything looks okay, you'll see a green <span class="code-accent">'Merge pull request'</span> button at the bottom. Click it, and all the changes will now be in your main branch.</p>
+          </article>
+          <article class="step" data-visual="6">
+            <div class="step-number">7</div>
+            <p>Go back to Vercel, click <span class="code-accent">'Create New Project'</span>, and from the list of your GitHub repositories, select the one you just created (you probably only have one right now).</p>
+          </article>
+          <article class="step" data-visual="7">
+            <div class="step-number">8</div>
+            <p>Vercel will start building the project and assign it its own web address (a Vercel subdomain).</p>
+          </article>
+          <article class="step" data-visual="8">
+            <div class="step-number">9</div>
+            <p>And that's it!</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="payoff">
+    <div class="content">
+      <div>
+        <p>From this moment on, everything you create with ChatGPT Codex will be sent to GitHub with a single click. Even before you merge a Pull Request, Vercel will automatically build a preview on a separate subdomain. This allows you to check that everything works correctly before you finalize the changes by merging.</p>
+        <p>In other words, this multi-step process is a one-time setup. After that, everything is automated.</p>
+      </div>
+      <div class="automation-visual">
+        <div class="automation-flow">
+          <span>ChatGPT Codex</span>
+          <span>GitHub</span>
+          <span>Vercel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="intro-content">
+      <div>
+        <p>My recommendation is to try this process just once, today. If you're like me and often feel a resistance to new things, going through a pre-written guide with a small task can really help break down that barrier.</p>
+        <p>Just go to the AI and have a chat about a simple website that would be useful for you. Maybe a short, personal page. Generate the content with it, find a design reference you like, and then ask the AI to write a design brief based on that reference. Then, take that brief to Codex.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>My recommendation is to try this process just once, today.</h2>
+    <button type="button" aria-label="Give it a try today">Give it a try today</button>
+  </section>
+
+  <script>
+    const visuals = [
+      {
+        icon: '🆕',
+        title: 'Create your GitHub space',
+        description: 'Spin up a fresh repository as the home for your AI-built site.'
+      },
+      {
+        icon: '🤝',
+        title: 'Connect GitHub & Vercel',
+        description: 'Let Vercel hook into your repo with a single sign-in to prepare deployments.'
+      },
+      {
+        icon: '🤖',
+        title: 'Authorize ChatGPT Codex',
+        description: 'Grant Codex access so it can open pull requests directly in your project.'
+      },
+      {
+        icon: '🧠',
+        title: 'Prompt your starter page',
+        description: 'Use a simple request to create the first commit and populate the repository.'
+      },
+      {
+        icon: '📬',
+        title: 'Review the pull request',
+        description: 'Codex proposes changes automatically—open the PR to inspect what it built.'
+      },
+      {
+        icon: '✅',
+        title: 'Merge with confidence',
+        description: 'Approve the PR and your main branch updates instantly.'
+      },
+      {
+        icon: '🚀',
+        title: 'Launch on Vercel',
+        description: 'Select the repo and let Vercel orchestrate the build in the cloud.'
+      },
+      {
+        icon: '🌐',
+        title: 'Preview your site',
+        description: 'Vercel gives you a live URL as soon as the build finishes.'
+      },
+      {
+        icon: '🎉',
+        title: 'Celebrate the workflow',
+        description: 'Everything is wired up for fast, repeatable shipping of new ideas.'
+      }
+    ];
+
+    const steps = document.querySelectorAll('.step');
+    const visualCard = document.getElementById('visualCard');
+    const visualIcon = document.getElementById('visualIcon');
+    const visualTitle = document.getElementById('visualTitle');
+    const visualDescription = document.getElementById('visualDescription');
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            steps.forEach(step => step.classList.remove('active'));
+            entry.target.classList.add('active');
+            const idx = Number(entry.target.dataset.visual);
+            const visual = visuals[idx];
+            if (visual) {
+              visualCard.classList.add('active');
+              visualIcon.textContent = visual.icon;
+              visualTitle.textContent = visual.title;
+              visualDescription.textContent = visual.description;
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+        rootMargin: '-20% 0px -20% 0px'
+      }
+    );
+
+    steps.forEach(step => observer.observe(step));
+
+    const copyButton = document.getElementById('copyButton');
+    const copyBox = document.getElementById('copyBox');
+
+    copyButton.addEventListener('click', async () => {
+      const text = "Create a 'work in progress' page with the text * * * in the style of * * *.";
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.textContent = 'Copied!';
+        copyButton.classList.add('copied');
+        setTimeout(() => {
+          copyButton.textContent = 'Copy';
+          copyButton.classList.remove('copied');
+        }, 2200);
+      } catch (error) {
+        copyButton.textContent = 'Press Ctrl+C';
+      }
+    });
+  </script>
+</body>
+</html>
